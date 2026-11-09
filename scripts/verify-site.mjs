@@ -3,7 +3,7 @@ import { readFile, access } from "node:fs/promises";
 
 const base = process.env.SITE_URL || "http://localhost:3000";
 const { pages, logo } = JSON.parse(await readFile(new URL("../src/content/site.json", import.meta.url), "utf8"));
-const paths = new Set(pages.map((page) => `/${page.slug}`));
+const paths = new Set([...pages.map((page) => `/${page.slug}`), "/pay"]); // /pay is a code route, not in site.json
 let checkedImages = 0;
 
 function plainText(node) {
@@ -42,7 +42,8 @@ for (const page of pages) {
   assert(!html.includes("static.parastorage.com"), `Wix runtime dependency: ${path}`);
   const main = html.match(/<main\b[^>]*>([\s\S]*?)<\/main>/)?.[1];
   assert(main, `Missing rendered content: ${path}`);
-  const rendered = normalize(decodeHtml(main.replace(/<[^>]*>/g, " ")));
+  // Ignore the added "Pay now" buttons inside price rows when comparing original content.
+  const rendered = normalize(decodeHtml(main.replace(/<a class="rate-pay"[^>]*>[\s\S]*?<\/a>/g, " ").replace(/<[^>]*>/g, " ")));
   for (const [index, block] of page.blocks.entries()) {
     assert(rendered.includes(normalize(plainText(block))), `Original content changed or missing: ${path}, block ${index}`);
   }
