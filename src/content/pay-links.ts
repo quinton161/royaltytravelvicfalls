@@ -19,14 +19,14 @@ export type PayLink = {
 };
 
 export const payLinks: PayLink[] = [
-  { id: "8dxoXTuzY59-", name: "Devil's Pool (AM)", price: 190, category: "Explore", match: /devil/i, pages: ["safari-activities"] },
-  { id: "pirw5jWCe2JD", name: "Full Day Chobe", price: 180, category: "Explore", match: /full day chobe/i, pages: ["safari-activities"] },
+  { id: "0FWNzlUX8kpU", name: "Devil's Pool (AM)", price: 190, category: "Explore", match: /devil/i, pages: ["safari-activities"] },
+  { id: "ke5bvRjj0thc", name: "Full Day Chobe", price: 180, category: "Explore", match: /full day chobe/i, pages: ["safari-activities"] },
   { id: "vZslTWnsVcJn", name: "Game Drive (AM/PM)", price: 153, category: "Explore", match: /^game drive/i, pages: ["safari-activities"] },
-  { id: "H4oz9OYqmHM8", name: "White Water Rafting (High Water)", price: 161, category: "Adventure", match: /rafting.*high/i, pages: ["adrenalin-activites"] },
+  { id: "eSLKpZmiCgvE", name: "White Water Rafting (High Water)", price: 161, category: "Adventure", match: /rafting.*high/i, pages: ["adrenalin-activites"] },
   { id: "jzp1pqOBnxu8", name: "White Water Rafting (Low Water)", price: 173, category: "Adventure", match: /rafting.*low/i, pages: ["adrenalin-activites"] },
-  { id: "62Ci9U219yOF", name: "Bungee Jump", price: 174, category: "Adventure", match: /^bun(g|j)/i, pages: ["bridge-activities"] },
-  { id: "-McrqqQlMYy6", name: "Zip-line", price: 105, category: "Adventure", match: /^zip-?\s?line/i, pages: ["bridge-activities"] },
-  { id: "nfGvr4y7kJXf", name: "15 Min Helicopter Flight", price: 175, category: "Experience", match: /15 ?mins? helicopter/i, pages: [] },
+  { id: "JHy8IcauTt7D", name: "Bungee Jump", price: 174, category: "Adventure", match: /^bun(g|j)/i, pages: ["bridge-activities"] },
+  { id: "9_pp7_Fv9w3_", name: "Zip-line", price: 105, category: "Adventure", match: /^zip-?\s?line/i, pages: ["bridge-activities"] },
+  { id: "ynDjuGkEDSwh", name: "15 Min Helicopter Flight", price: 175, category: "Experience", match: /15 ?mins? helicopter/i, pages: [] },
   { id: "lV_g5zS36e3s", name: "Sunset Cruise", price: 50, category: "Experience", match: /^sunset cruise/i, pages: ["safari-activities"] },
 ];
 
