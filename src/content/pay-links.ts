@@ -1,9 +1,9 @@
 // Wix Pay Links (Wix dashboard → Getting Paid → Pay Links).
 // Payments are processed by the DPO gateway connected in Wix and paid out to the DPO account.
-// Pay Links only open on the bare domain (royaltytravelvicfalls.com), which DNS points at Wix.
-// www is served by Vercel and pay. returns "couldn't load the pay link", so do not use either.
+// Pay Links open on pay.royaltytravelvicfalls.com, the Wix primary domain.
+// www and the bare domain are served by Vercel, so links on them never reach Wix.
 export const PAY_BASE_URL =
-  process.env.NEXT_PUBLIC_WIX_PAY_BASE_URL ?? "https://royaltytravelvicfalls.com";
+  process.env.NEXT_PUBLIC_WIX_PAY_BASE_URL ?? "https://pay.royaltytravelvicfalls.com";
 
 export const WHATSAPP_NUMBER = "263774489958";
 
