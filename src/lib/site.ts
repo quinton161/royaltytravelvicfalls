@@ -27,6 +27,7 @@ export const navigation = [
   { href: "/bridge-activities", label: "Bridge Activities" },
   { href: "/activities-and-tours", label: "Village Tour" },
   { href: "/accommodation", label: "Accommodation" },
+  { href: "/pay", label: "Book & Pay Online" },
   { href: "/contact-us", label: "Contact Us" },
   { href: "/about-us", label: "About Us" },
   { href: "/blog", label: "Blog" },

@@ -5,6 +5,7 @@ import { posts, plainText, type ContentNode, type SitePage } from "@/lib/site";
 import { ContactForm } from "./contact-form";
 import { ScrollReveal } from "./scroll-reveal";
 import { heroImageFor, pricePhotos, photoFocus } from "@/lib/visuals";
+import { payLinkFor, payLinksForPage, payUrl } from "@/content/pay-links";
 
 const allowedTags = new Set(["p", "h2", "h3", "ul", "ol", "li", "strong", "em", "b", "i", "u", "span"]);
 const normalize = (text: string) => text.replace(/\s+/g, " ").trim().toLowerCase();
@@ -32,11 +33,20 @@ function lines(node: ContentNode): string[] {
   return withBreaks(node).split(/\n/).map((line) => line.trim()).filter(Boolean);
 }
 
-function RateRows({ values }: { values: string[] }) {
+function RateRows({ values, payable = false }: { values: string[]; payable?: boolean }) {
   return <div className="rate-rows">{values.map((line, index) => {
     const match = line.match(/^(.*?)(US\$\s*[\d,]+(?:\.\d+)?|\$\s*[\d,]+(?:\.\d+)?)\s*$/);
-    return match ? <dl className="rate-row" key={index}><dt>{match[1].trim()}</dt><dd>{match[2]}</dd></dl> : <h3 className="rate-subheading" key={index}>{line}</h3>;
+    if (!match) return <h3 className="rate-subheading" key={index}>{line}</h3>;
+    const label = match[1].trim();
+    const pay = payable ? payLinkFor(label) : undefined;
+    return <dl className={`rate-row${pay ? " has-pay" : ""}`} key={index}><dt>{label}</dt><dd>{match[2]}</dd>{pay ? <a className="rate-pay" href={payUrl(pay.id)} target="_blank" rel="noopener noreferrer" aria-label={`Pay online for ${pay.name}, US$${pay.price} per person`}>Pay now</a> : null}</dl>;
   })}</div>;
+}
+
+function PayCallout({ slug }: { slug: string }) {
+  const links = payLinksForPage(slug);
+  if (!links.length) return null;
+  return <section className="pay-callout" aria-labelledby="pay-callout-title" data-reveal><h2 id="pay-callout-title">Book &amp; pay online</h2>{links.map((p) => <a className="pay-chip" key={p.id} href={payUrl(p.id)} target="_blank" rel="noopener noreferrer">{p.name} <strong>US${p.price}</strong> <span aria-hidden="true">↗</span></a>)}<p>Prices are per person. Please <Link href="/pay">check availability on WhatsApp</Link> before you pay. Park fees are paid on the day.</p></section>;
 }
 
 function PageHero({ page }: { page: SitePage }) {
@@ -54,7 +64,7 @@ function Gallery({ images }: { images: SitePage["images"] }) {
 }
 
 function ContactAside() {
-  return <aside className="travel-aside" data-reveal><span className="section-marker" aria-hidden="true">↗</span><p>Start Planning Your Dream Trip Today</p><Link href="/contact-us" className="button">Contact Us <span aria-hidden="true">↗</span></Link><a className="aside-phone" href="tel:+263774489958">+263774489958</a><div className="aside-links"><Link href="/pricelist-2024">Pricelist 2026 <span aria-hidden="true">↗</span></Link><Link href="/transfers">Transfers <span aria-hidden="true">↗</span></Link><Link href="/accommodation">Accommodation <span aria-hidden="true">↗</span></Link></div></aside>;
+  return <aside className="travel-aside" data-reveal><span className="section-marker" aria-hidden="true">↗</span><p>Start Planning Your Dream Trip Today</p><Link href="/contact-us" className="button">Contact Us <span aria-hidden="true">↗</span></Link><a className="aside-phone" href="tel:+263774489958">+263774489958</a><div className="aside-links"><Link href="/pay">Book &amp; Pay Online <span aria-hidden="true">↗</span></Link><Link href="/pricelist-2024">Pricelist 2026 <span aria-hidden="true">↗</span></Link><Link href="/transfers">Transfers <span aria-hidden="true">↗</span></Link><Link href="/accommodation">Accommodation <span aria-hidden="true">↗</span></Link></div></aside>;
 }
 
 export function ContentPage({ page }: { page: SitePage }) {
@@ -74,13 +84,13 @@ export function ContentPage({ page }: { page: SitePage }) {
 function TourPage({ page, blocks }: { page: SitePage; blocks: ContentNode[] }) {
   const remaining = page.images.filter((image) => image.src !== heroImageFor(page)?.src);
   const feature = remaining[0];
-  return <div className="container page-section"><div className={`tour-intro-grid tour-${page.slug}`}><div className="tour-copy" data-reveal><Blocks blocks={blocks} /></div>{feature ? <div className="tour-feature-photo" data-reveal><Image src={feature.src} alt={feature.alt} fill sizes="(max-width: 800px) 100vw, 45vw" /><span className="photo-frame-accent" aria-hidden="true" /></div> : null}</div><Gallery images={remaining.slice(1)} /><div className="tour-enquiry-banner" data-reveal><p>Start Planning Your Dream Trip Today</p><Link href="/contact-us" className="button">Contact Us <span aria-hidden="true">↗</span></Link><a href="tel:+263774489958">+263774489958</a></div></div>;
+  return <div className="container page-section"><div className={`tour-intro-grid tour-${page.slug}`}><div className="tour-copy" data-reveal><Blocks blocks={blocks} /></div>{feature ? <div className="tour-feature-photo" data-reveal><Image src={feature.src} alt={feature.alt} fill sizes="(max-width: 800px) 100vw, 45vw" /><span className="photo-frame-accent" aria-hidden="true" /></div> : null}</div><Gallery images={remaining.slice(1)} /><PayCallout slug={page.slug} /><div className="tour-enquiry-banner" data-reveal><p>Start Planning Your Dream Trip Today</p><Link href="/contact-us" className="button">Contact Us <span aria-hidden="true">↗</span></Link><Link href="/pay" className="text-link">Book &amp; Pay Online <span aria-hidden="true">↗</span></Link><a href="tel:+263774489958">+263774489958</a></div></div>;
 }
 
 function Prices({ page }: { page: SitePage }) {
-  return <div className="container page-section"><div className="section-intro" data-reveal><Blocks blocks={[page.blocks[0]]} /></div><div className="price-grid">{[
+  return <div className="container page-section"><div className="section-intro" data-reveal><Blocks blocks={[page.blocks[0]]} /><p className="price-pay-note">Activities with a <strong>Pay now</strong> button can be paid online by card. <Link href="/pay">How booking and paying works</Link>.</p></div><div className="price-grid">{[
     { labels: [1, 2], heading: 3, rates: 4 }, { labels: [5], heading: 6, rates: 7 }, { labels: [8], heading: 9, rates: 10 },
-  ].map((group, index) => <section className="price-card" key={group.heading} data-reveal><div className="price-cover"><Image src={pricePhotos[index].src} alt={pricePhotos[index].alt} fill sizes="(max-width: 800px) 100vw, 33vw" /></div><div className="price-card-heading"><div className="price-category">{group.labels.map((index) => <span key={index}>{plainText(page.blocks[index])}</span>)}</div><h2>{plainText(page.blocks[group.heading])}</h2></div><RateRows values={lines(page.blocks[group.rates])} /></section>)}</div><section className="rate-terms" data-reveal><Blocks blocks={[page.blocks[11]]} /></section></div>;
+  ].map((group, index) => <section className="price-card" key={group.heading} data-reveal><div className="price-cover"><Image src={pricePhotos[index].src} alt={pricePhotos[index].alt} fill sizes="(max-width: 800px) 100vw, 33vw" /></div><div className="price-card-heading"><div className="price-category">{group.labels.map((index) => <span key={index}>{plainText(page.blocks[index])}</span>)}</div><h2>{plainText(page.blocks[group.heading])}</h2></div><RateRows values={lines(page.blocks[group.rates])} payable /></section>)}</div><section className="rate-terms" data-reveal><Blocks blocks={[page.blocks[11]]} /></section></div>;
 }
 
 function Transfers({ page }: { page: SitePage }) {

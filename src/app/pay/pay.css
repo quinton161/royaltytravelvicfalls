@@ -1,0 +1,18 @@
+.pay-hero-lead { color: #ffffffcc; font-size: 18px; max-width: 560px; margin: 18px 0 0; }
+.pay-steps { list-style: none; padding: 0; margin: 0 0 56px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.pay-steps li { background: var(--surface); border-top: 3px solid var(--brand); padding: 26px; }
+.pay-steps h2 { font-size: 21px; margin: 10px 0 8px; }
+.pay-steps p { font-size: 15px; margin: 0; color: var(--muted); }
+.pay-step-number { font-family: Georgia, serif; font-size: 15px; color: #7a5d00; }
+.pay-category-section { margin-bottom: 44px; }
+.pay-category-section > h2 { font-size: 27px; margin: 0 0 18px; }
+.pay-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 18px; }
+.pay-card { border: 1px solid var(--line); border-radius: 5px; background: white; padding: 24px; display: flex; flex-direction: column; }
+.pay-card h3 { font-size: 19px; margin: 0; }
+.pay-price { font-size: 26px; font-weight: 700; margin: 8px 0 20px; font-variant-numeric: tabular-nums; }
+.pay-price span { font-size: 14px; font-weight: 400; color: var(--muted); }
+.pay-card-actions { margin-top: auto; display: grid; gap: 12px; }
+.pay-check-link { font-size: 15px; text-align: center; }
+.pay-other h2 { font-size: 23px; margin: 0 0 10px; }
+.rate-terms p.pay-small { font-size: 14px; color: var(--muted); margin-top: 14px; }
+@media (max-width: 800px) { .pay-steps { grid-template-columns: 1fr; } }

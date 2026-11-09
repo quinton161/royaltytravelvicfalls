@@ -75,3 +75,6 @@
   .lp-additional-services { grid-template-columns: 1fr; margin-top: 28px; }.lp-additional-services article { min-height: 82px; }.lp-additional-services h3 { font-size: 24px; }
   .lp-final { padding-block: 38px; }.lp-final > div { align-items: start; flex-direction: column; gap: 22px; }.lp-final p { font-size: 30px; }
 }
+.lp a.lp-btn-outline { border: 1px solid #ffffffb3; color: white; margin-left: 14px; }
+.lp a.lp-btn-outline:hover { background: #ffffff1a; }
+@media (max-width: 650px) { .lp-hero-actions { flex-wrap: wrap; } .lp a.lp-btn-outline { margin: 12px 0 0; } }

@@ -26,7 +26,7 @@ export function LandingPage({ content }: Props) {
           <div className="lp-hero-picture"><Image src={content.heroImage.src} alt={content.heroImage.alt} fill priority sizes="100vw" /></div><div className="lp-hero-shade" />
           <div className="lp-hero-copy lp-container">
             <h1 className="lp-hero-enter" id="landing-title">Elevate Your<br />Travel Experience<br /><em>with Expert Consulting</em></h1>
-            <div className="lp-hero-actions lp-hero-enter lp-delay-2"><Link href="/contact-us" className="lp-btn lp-btn-gold">Start Planning Your Dream Trip Today <Arrow /></Link></div>
+            <div className="lp-hero-actions lp-hero-enter lp-delay-2"><Link href="/contact-us" className="lp-btn lp-btn-gold">Start Planning Your Dream Trip Today <Arrow /></Link><Link href="/pay" className="lp-btn lp-btn-outline">Book &amp; Pay Online</Link></div>
             <div className="lp-hero-bottom"><a href="tel:+263774489958">For Inquiries, Contact Us at +263774489958</a><a href="#about-royalty" className="lp-scroll" aria-label="About Royalty Travel"><span className="lp-scroll-circle" aria-hidden="true">↓</span></a></div>
           </div>
         </section>
